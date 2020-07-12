@@ -2,7 +2,7 @@
 
 
 ## Description:
-Spring Boot project to demonstrate correct use of HTTP status codes in REST API
+Spring Boot project to demonstrate correct use of HTTP status codes in REST API and integration testing using MockMVC.
 
 ## Application is based on:
 * *Spring Boot*
