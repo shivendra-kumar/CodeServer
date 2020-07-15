@@ -1,0 +1,583 @@
+{
+	"info": {
+		"_postman_id": "4853a196-9d82-4538-aa22-d0a197370727",
+		"name": "CodeServer-SampleRequestsForPatchAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Patch - Full Payload - Expect 200 with changed fields",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "22e48007-72ab-4cb6-bc7b-789dd64f238e",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Fields in request payload are updated\", function () {",
+							"   var jsonData = JSON.parse(responseBody);",
+							"    pm.expect(jsonData.externalId).to.eql(\"EXTERNALIDEDITED\");",
+							"    pm.expect(jsonData.name).to.eql(\"Name-Edited\");",
+							"    pm.expect(jsonData.sdlcSystem.id).to.eql(1);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"externalId\": \"EXTERNALIDEDITED\",\n\t\"name\": \"Name-Edited\",\n\t\"sdlcSystem\": {\n\t\t\"id\": 1\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v2/projects/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v2",
+						"projects",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch - Payload with only externalId - Expect 200 and same name / system",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e230929d-8bf2-4219-90b4-b7a2c90a4980",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Only fields available in request payload are updated\", function () {",
+							"   var jsonData = JSON.parse(responseBody);",
+							"    pm.expect(jsonData.externalId).to.eql(\"EXTERNALIDEDITED\");",
+							"    pm.expect(jsonData.name).to.eql(\"Project One\");",
+							"    pm.expect(jsonData.sdlcSystem.id).to.eql(3);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"externalId\": \"EXTERNALIDEDITED\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v2/projects/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v2",
+						"projects",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch - Payload with only sdlcSystem.id - Expect 200 and same name / externalId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1b026b4e-49ca-4e03-b9fa-bc59bcad8a56",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Only fields available in request payload are updated\", function () {",
+							"   var jsonData = JSON.parse(responseBody);",
+							"    pm.expect(jsonData.externalId).to.eql(\"PROJECTTWO\");",
+							"    pm.expect(jsonData.name).to.eql(\"Project Two\");",
+							"    pm.expect(jsonData.sdlcSystem.id).to.eql(1);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"sdlcSystem\": {\n\t\t\"id\": 1\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v2/projects/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v2",
+						"projects",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch - Empty Payload - Expect 200 with no changed fields",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c84159c4-3dad-414e-a60a-8f3993c4ad3f",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"No fields are updated\", function () {",
+							"   var jsonData = JSON.parse(responseBody);",
+							"    pm.expect(jsonData.externalId).to.eql(\"PROJECTTHREE\");",
+							"    pm.expect(jsonData.name).to.eql(\"Project Three\");",
+							"    pm.expect(jsonData.sdlcSystem.id).to.eql(3);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v2/projects/8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v2",
+						"projects",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch - Payload with null name - Expect 200 with name having been nullified",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "80ed19fc-5acb-405f-9ad5-280d75897c79",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Name is nullified\", function () {",
+							"   var jsonData = JSON.parse(responseBody);",
+							"    pm.expect(jsonData.name).to.eql(null);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": null\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v2/projects/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v2",
+						"projects",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch - Payload Containing Illegal Value - Expect 400",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "012cd65b-ba8c-465d-ba28-52e0363a6c12",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"sdlcSystem\": {\n\t\t\"id\": \"Whatever\"\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v2/projects/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v2",
+						"projects",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch - Payload Containing Non Existing System - Expect 404",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8fc1f326-12d5-45c1-a72b-2f46c048f4cf",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"sdlcSystem\": {\n\t\t\"id\": 12345\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v2/projects/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v2",
+						"projects",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch - Payload Containing Conflicting System - Expect 409",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ec8cf0ca-c53f-498e-b77f-8e9aa88d582b",
+						"exec": [
+							"pm.test(\"Status code is 409\", function () {",
+							"    pm.response.to.have.status(409);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"sdlcSystem\": {\n\t\t\"id\": 2\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v2/projects/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v2",
+						"projects",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch - Payload Containing Conflicting External ID - Expect 409",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1d2cfc01-1868-493c-a0e7-459f51786a26",
+						"exec": [
+							"pm.test(\"Status code is 409\", function () {",
+							"    pm.response.to.have.status(409);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"externalId\": \"PROJECTX\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v2/projects/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v2",
+						"projects",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch - Payload Containing Conflicting System / External ID - Expect 409",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f997e8fa-c568-4a80-94a1-9b09cfce7db8",
+						"exec": [
+							"pm.test(\"Status code is 409\", function () {",
+							"    pm.response.to.have.status(409);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"externalId\": \"PROJECTX\",\n\t\"sdlcSystem\": {\n\t\t\"id\": 2\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v2/projects/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v2",
+						"projects",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch - Illegal Path Variables - Expect 400",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f8899daf-c6e2-428c-8772-601fba01e2b7",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v2/projects/whatever",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v2",
+						"projects",
+						"whatever"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch - Invalid Path Variables - Expect 404",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "07bf2273-9257-4f4f-abb1-0f4e47a70d68",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v2/projects/1234",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v2",
+						"projects",
+						"1234"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
